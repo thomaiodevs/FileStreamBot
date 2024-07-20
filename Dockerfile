@@ -10,4 +10,4 @@ EXPOSE 8080
 
 COPY . .
 
-CMD ["sh", "-c", "python -m FileStream & python health_check.py"]
+CMD ["python", "-m", "FileStream"]
