@@ -48,7 +48,7 @@ class BUTTON(object):
             InlineKeyboardButton('ᴀʙᴏᴜᴛ', callback_data='about'),
             InlineKeyboardButton('ᴄʟᴏsᴇ', callback_data='close')
         ],
-            [InlineKeyboardButton("📢 ᴜᴘᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ", url=f'https://t.me/{Telegram.UPDATES_CHANNEL}')]
+            [InlineKeyboardButton("📢 ᴜᴘᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ", url='https://t.me/botio_devs')]
         ]
     )
     HELP_BUTTONS = InlineKeyboardMarkup(
