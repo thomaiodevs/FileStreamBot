@@ -1,3 +1,4 @@
+pytz
 aiohttp
 pyrofork
 python-dotenv
