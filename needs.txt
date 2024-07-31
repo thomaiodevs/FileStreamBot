@@ -1,5 +1,8 @@
+lxml
 Beautifulsoup4
 pytz
+
+
 aiohttp
 pyrofork
 python-dotenv
