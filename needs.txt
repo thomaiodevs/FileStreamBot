@@ -1,6 +1,7 @@
 lxml
 Beautifulsoup4
 pytz
+shortzy
 
 
 aiohttp
