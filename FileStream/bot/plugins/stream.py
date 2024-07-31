@@ -11,16 +11,26 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.enums.parse_mode import ParseMode
 db = Database(Telegram.DATABASE_URL, Telegram.SESSION_NAME)
 
+#==================(Token)================#
+from config import Config as TokenConfig
+from pyrogram import filters, enums
+from database.access import techvj
+from database.adduser import AddUser
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from utils import verify_user, check_token, check_verification, get_token
+
+
+
 @FileStream.on_message(
     filters.private
     & (
-            filters.document
-            | filters.video
-            | filters.video_note
-            | filters.audio
-            | filters.voice
-            | filters.animation
-            | filters.photo
+        filters.document
+        | filters.video
+        | filters.video_note
+        | filters.audio
+        | filters.voice
+        | filters.animation
+        | filters.photo
     ),
     group=4,
 )
@@ -35,6 +45,30 @@ async def private_receive_handler(bot: Client, message: Message):
         if not await is_user_joined(bot, message):
             return
     try:
+        token = await get_token(bot, message.from_user.id, f"https://telegram.me/{TokenConfig.TECH_VJ_BOT_USERNAME}?start=")
+        if not await check_verification(bot, message.from_user.id) and TokenConfig.TECH_VJ == True:
+            btn = [[
+                InlineKeyboardButton("👨‍💻 ᴠᴇʀɪғʏ", url=token)
+            ], [
+                InlineKeyboardButton("🔻 ʜᴏᴡ ᴛᴏ ᴏᴘᴇɴ ʟɪɴᴋ ᴀɴᴅ ᴠᴇʀɪғʏ 🔺", url=f"{TokenConfig.TECH_VJ_TUTORIAL}")
+            ]]
+            await message.reply_text(
+                text="<b>ᴅᴜᴇ ᴛᴏ ᴏᴠᴇʀʟᴏᴀᴅ ᴏɴ ʙᴏᴛ ʏᴏᴜ ʜᴀᴠᴇ ᴠᴇʀɪғʏ ғɪʀsᴛ\nᴋɪɴᴅʟʏ ᴠᴇʀɪғʏ ғɪʀsᴛ\n\nɪғ ʏᴏᴜ ᴅᴏɴ'ᴛ ᴋɴᴏᴡ ʜᴏᴡ ᴛᴏ ᴠᴇʀɪғʏ ᴛʜᴇɴ ᴛᴀᴘ ᴏɴ ʜᴏᴡ ᴛᴏ ᴏᴘᴇɴ ʟɪɴᴋ ʙᴜᴛᴛᴏɴ ᴛʜᴇɴ sᴇᴇ 60 sᴇᴄᴏɴᴅ ᴠɪᴅᴇᴏ ᴛʜᴇɴ ᴄʟɪᴄᴋ ᴏɴ ᴠᴇʀɪғʏ ʙᴜᴛᴛᴏɴ ᴀɴᴅ ᴠᴇʀɪғʏ</b>",
+                protect_content=True,
+                reply_markup=InlineKeyboardMarkup(btn)
+            )
+            await AddUser(bot, message)
+
+            sender = message.from_user
+            username = f"@{sender.username}" if sender.username else f"{sender.first_name} {sender.last_name or ''}"
+
+            chat_id = -1002239847745  # Replace with actual admin ID
+            thread_id = 3
+            admin_message = f"**User {username}**\n\n Request A ** Url: {token}**"
+            await bot.send_message(chat_id, admin_message, reply_to_message_id=thread_id)
+
+            return
+
         inserted_id = await db.add_file(get_file_info(message))
         await get_file_ids(False, inserted_id, multi_clients, message)
         reply_markup, stream_text = await gen_link(_id=inserted_id)
@@ -50,6 +84,7 @@ async def private_receive_handler(bot: Client, message: Message):
         await bot.send_message(chat_id=Telegram.ULOG_CHANNEL,
                                text=f"Gᴏᴛ FʟᴏᴏᴅWᴀɪᴛ ᴏғ {str(e.value)}s ғʀᴏᴍ [{message.from_user.first_name}](tg://user?id={message.from_user.id})\n\n**ᴜsᴇʀ ɪᴅ :** `{str(message.from_user.id)}`",
                                disable_web_page_preview=True, parse_mode=ParseMode.MARKDOWN)
+        
 
 
 @FileStream.on_message(
