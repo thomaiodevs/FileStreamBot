@@ -36,6 +36,41 @@ async def start(bot: Client, message: Message):
                 reply_markup=BUTTON.START_BUTTONS
             )
     else:
+        if "verify" in message.text:
+            try:
+                data = update.command[1]
+
+    if data.split("-", 1)[0] == "verify":
+        userid = data.split("-", 2)[1]
+        token = data.split("-", 3)[2]
+        if str(update.from_user.id) != str(userid):
+            return await update.reply_text(
+                text="<b>ᴇxᴘɪʀᴇᴅ ʟɪɴᴋ ᴏʀ ɪɴᴠᴀʟɪᴅ ʟɪɴᴋ !</b>",
+                protect_content=True
+            )
+        is_valid = await check_token(bot, userid, token)
+        if is_valid == True:
+            await update.reply_text(
+                text=f"<b>ʜᴇʟʟᴏ {update.from_user.mention} 👋,\nʏᴏᴜ ᴀʀᴇ sᴜᴄᴄᴇssғᴜʟʟʏ ᴠᴇʀɪғɪᴇᴅ !\n\nɴᴏᴡ ʏᴏᴜ ʜᴀᴠᴇ ᴜɴʟɪᴍɪᴛᴇᴅ ᴀᴄᴄᴇss ғᴏʀ ᴀʟʟ ᴜʀʟ ᴜᴘʟᴏᴀᴅɪɴɢ ᴛɪʟʟ ᴛᴏᴅᴀʏ ᴍɪᴅɴɪɢʜᴛ.</b>",
+                protect_content=True
+            )
+            await verify_user(bot, userid, token)
+            sender = update.from_user
+            username = f"@{sender.username}" if sender.username else f"{sender.first_name} {sender.last_name or ''}"
+            # Send message to the bot admin or log channel about the verification
+            chat_id = -1002239847745  # Replace with actual admin ID
+            thread_id = 4064
+            admin_message = f"**User {username}**\nverified access with \n**URL: {data}**"
+            await bot.send_message(chat_id, admin_message, reply_to_message_id=thread_id)
+
+    
+        else:
+            return await update.reply_text(
+                text="<b>ᴇxᴘɪʀᴇᴅ ʟɪɴᴋ ᴏʀ ɪɴᴠᴀʟɪᴅ ʟɪɴᴋ !</b>",
+                protect_content=True
+            )
+                
+    else:
         if "stream_" in message.text:
             try:
                 file_check = await db.get_file(usr_cmd)
