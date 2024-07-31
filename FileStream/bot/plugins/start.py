@@ -43,6 +43,7 @@ async def start(bot: Client, message: Message):
     else:
         if "verify" in message.text:
             try:
+                update = message
                 data = update.command[1]
                 if data.split("-", 1)[0] == "verify":
                     userid = data.split("-", 2)[1]
