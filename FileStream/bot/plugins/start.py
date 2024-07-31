@@ -21,8 +21,8 @@ db = Database(Telegram.DATABASE_URL, Telegram.SESSION_NAME)
 
 @FileStream.on_message(filters.command('start') & filters.private)
 async def start(bot: Client, message: Message):
-    if not await verify_user(bot, message):
-        return
+  #  if not await verify_user(bot, message):
+     #   return
     usr_cmd = message.text.split("_")[-1]
 
     if usr_cmd == "/start":
