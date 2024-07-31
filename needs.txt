@@ -1,3 +1,4 @@
+Beautifulsoup4
 pytz
 aiohttp
 pyrofork
