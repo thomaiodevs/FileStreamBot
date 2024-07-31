@@ -3,7 +3,7 @@
 import motor.motor_asyncio
 from config import Config
 
-DATABASE_NAME = "teraiobot"
+DATABASE_NAME = "filestreamtkn"
 DATABASE_URI = Config.TECH_VJ_DATABASE_URL
 
 class Database:
