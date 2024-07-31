@@ -11,6 +11,16 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.enums.parse_mode import ParseMode
 db = Database(Telegram.DATABASE_URL, Telegram.SESSION_NAME)
 
+#==================(Token)================#
+from config import Config as TokenConfig
+from pyrogram import filters, enums
+from database.access import techvj
+from database.adduser import AddUser
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from utils import verify_user, check_token, check_verification, get_token
+
+
+
 @FileStream.on_message(
     filters.private
     & (
