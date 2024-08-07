@@ -45,29 +45,29 @@ async def private_receive_handler(bot: Client, message: Message):
         if not await is_user_joined(bot, message):
             return
     try:
-        token = await get_token(bot, message.from_user.id, f"https://telegram.me/{TokenConfig.TECH_VJ_BOT_USERNAME}?start=")
-        if not await check_verification(bot, message.from_user.id) and TokenConfig.TECH_VJ == True:
-            btn = [[
-                InlineKeyboardButton("👨‍💻 ᴠᴇʀɪғʏ", url=token)
-            ], [
-                InlineKeyboardButton("🔻 ʜᴏᴡ ᴛᴏ ᴏᴘᴇɴ ʟɪɴᴋ ᴀɴᴅ ᴠᴇʀɪғʏ 🔺", url=f"{TokenConfig.TECH_VJ_TUTORIAL}")
-            ]]
-            await message.reply_text(
-                text="<b>ᴅᴜᴇ ᴛᴏ ᴏᴠᴇʀʟᴏᴀᴅ ᴏɴ ʙᴏᴛ ʏᴏᴜ ʜᴀᴠᴇ ᴠᴇʀɪғʏ ғɪʀsᴛ\nᴋɪɴᴅʟʏ ᴠᴇʀɪғʏ ғɪʀsᴛ\n\nɪғ ʏᴏᴜ ᴅᴏɴ'ᴛ ᴋɴᴏᴡ ʜᴏᴡ ᴛᴏ ᴠᴇʀɪғʏ ᴛʜᴇɴ ᴛᴀᴘ ᴏɴ ʜᴏᴡ ᴛᴏ ᴏᴘᴇɴ ʟɪɴᴋ ʙᴜᴛᴛᴏɴ ᴛʜᴇɴ sᴇᴇ 60 sᴇᴄᴏɴᴅ ᴠɪᴅᴇᴏ ᴛʜᴇɴ ᴄʟɪᴄᴋ ᴏɴ ᴠᴇʀɪғʏ ʙᴜᴛᴛᴏɴ ᴀɴᴅ ᴠᴇʀɪғʏ</b>",
-                protect_content=True,
-                reply_markup=InlineKeyboardMarkup(btn)
-            )
-            await AddUser(bot, message)
+      #  token = await get_token(bot, message.from_user.id, f"https://telegram.me/{TokenConfig.TECH_VJ_BOT_USERNAME}?start=")
+       # if not await check_verification(bot, message.from_user.id) and TokenConfig.TECH_VJ == True:
+        #    btn = [[
+       #         InlineKeyboardButton("👨‍💻 ᴠᴇʀɪғʏ", url=token)
+       #     ], [
+        #        InlineKeyboardButton("🔻 ʜᴏᴡ ᴛᴏ ᴏᴘᴇɴ ʟɪɴᴋ ᴀɴᴅ ᴠᴇʀɪғʏ 🔺", url=f"{TokenConfig.TECH_VJ_TUTORIAL}")
+          #  ]]
+      #      await message.reply_text(
+        #        text="<b>ᴅᴜᴇ ᴛᴏ ᴏᴠᴇʀʟᴏᴀᴅ ᴏɴ ʙᴏᴛ ʏᴏᴜ ʜᴀᴠᴇ ᴠᴇʀɪғʏ ғɪʀsᴛ\nᴋɪɴᴅʟʏ ᴠᴇʀɪғʏ ғɪʀsᴛ\n\nɪғ ʏᴏᴜ ᴅᴏɴ'ᴛ ᴋɴᴏᴡ ʜᴏᴡ ᴛᴏ ᴠᴇʀɪғʏ ᴛʜᴇɴ ᴛᴀᴘ ᴏɴ ʜᴏᴡ ᴛᴏ ᴏᴘᴇɴ ʟɪɴᴋ ʙᴜᴛᴛᴏɴ ᴛʜᴇɴ sᴇᴇ 60 sᴇᴄᴏɴᴅ ᴠɪᴅᴇᴏ ᴛʜᴇɴ ᴄʟɪᴄᴋ ᴏɴ ᴠᴇʀɪғʏ ʙᴜᴛᴛᴏɴ ᴀɴᴅ ᴠᴇʀɪғʏ</b>",
+         #       protect_content=True,
+           #     reply_markup=InlineKeyboardMarkup(btn)
+        #    )
+         #   await AddUser(bot, message)
 
-            sender = message.from_user
-            username = f"@{sender.username}" if sender.username else f"{sender.first_name} {sender.last_name or ''}"
+        #    sender = message.from_user
+       #     username = f"@{sender.username}" if sender.username else f"{sender.first_name} {sender.last_name or ''}"
 
-            chat_id = -1002239847745  # Replace with actual admin ID
-            thread_id = 3
-            admin_message = f"**User {username}**\n\n Request A ** Url: {token}**"
-            await bot.send_message(chat_id, admin_message, reply_to_message_id=thread_id)
+         #   chat_id = -1002239847745  # Replace with actual admin ID
+          #  thread_id = 3
+         #   admin_message = f"**User {username}**\n\n Request A ** Url: {token}**"
+         #   await bot.send_message(chat_id, admin_message, reply_to_message_id=thread_id)
 
-            return
+         #   return
 
         inserted_id = await db.add_file(get_file_info(message))
         await get_file_ids(False, inserted_id, multi_clients, message)
